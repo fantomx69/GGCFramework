@@ -1,0 +1,22 @@
+[General]
+;Eventuali dati generali
+;...
+
+[User]
+;Eventuali dati generali
+;...
+
+[User-><nome utente>]
+UserName =
+Password =
+Enabled = true/false
+Waiting = true/false (registrato ma in attesa di abilitazione)
+Suspended = true/false (Registrato ma sospeso per qualche motivo)
+RegistrationDate =
+EnablingDate =
+SuspendedDate =
+ReactivationDate =
+LastLoginDate =
+LastLoginTime =
+LastLogoutDate =
+LastLogoutTime =

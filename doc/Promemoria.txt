@@ -1,0 +1,116 @@
+[/] Volendo ogni cartella può essere suddivisa in tante sotto-cartelle quante sono
+    le tipologie logiche dell'applicazione, ad esempio vedi le sotto-cartelle
+    della cartella "web". Possiamo quindi creare una cartella per login, index,
+    logout, ecc.. . Questa suddivisione, se il programma è grande, sarebbe
+    opportuna farla anche e soprattutto nelle certelle "controller", "model" e
+    "view". Nella cartella "web" la suddivisione, volendo, può essere fatta anche
+    solo per pagina, dove poi veranno messi : css, img e js;
+
+[ ] Nella classe "Config" permettere di modificare la configurazione anche a run-
+    time, tramite la classe "GGC_IniFile". Modificando innanzitutto l'array 
+    "data" di Config e volendo salvando poi i valori sul file .ini;
+
+[ ] Far configurae attraverso il file ini e in runtime attraverso la classe
+    "config" se dalle librerie "GGC_" in caso di errore far restituire "false"
+    oppure lanciare una eccezione;
+
+[ ] Definire una lista di azioni, nel controller specifico, (tramite ad esempio
+    una enumerazione, costanti di classe o array) per specificare quale azioni un
+    controller può e deve gestire. Effettuare questo controllo o nella "Init()",
+    o comunque prima, di operare con il "Model" e la "View";
+
+[ ] Definire una lista di parametri per azione (tramite ad esempio una
+    enumerazione, costanti di classe o array) per specificare quale parametri
+    un' azione di un controller può e deve gestire;
+
+[ ] Volendo si può dichiarare una classe di Entità, per ogni entità del programma,
+    che contenga, la classe, tutte le proprietà dell'entità e azioni che si
+    possono su essa intraprendere. Volendo questa entità potrebbe ospitare il ri-
+    sultato del data-model, e anzichè trattare con le query, si può creare una
+    sorta di orm e trattare con le classi, performance permettendo.
+    Volendo le istanze di queste entità possono essere restituite al client
+    con JSON, XML, ecc...;
+
+[ ] I Controllers come anche i Models possono essere speculari alle pagine, quindi
+    una per pagina, oppure speculari alle entità dell'applicazione e gestire,
+    quindi, più pagine, tramite le page, action e parametri;
+
+[X] L'associazione tra la richiesta e il controller, non deve essere fatta
+    staticamente sulla pagina, perchè così si è costretti ad avere un controller
+    per ogni pagina, ma bensì, deve essere eseguita con l'usilio di una tabella/
+    array di corrispondenze Nome=Valore, magari salvata all'interno del file .ini
+    on in un altro file e caricata a run-time dal "Dispatcher" nella "init()";
+
+[ ] SCrivere un motore di template personalizzato, rappresentatato da una classe
+    "GGC_Template" che permette di definire tutte le variabili che voglio tramite
+    i metodi magici __get(), __set() e poi fà il dispaly (include) della pagina
+    .phtml la quale legge le varibili dichiarate tramite il template engine.
+    Prevedere anche i metodi : assign(), replace(), remove(), per aggiungere,
+    modficare e rimuovere valori da utilizzare poi nel template;
+
+[ ] Nella richiesta fatta pervenire al server si può specificare il
+    "RequestType=SYNC|ASYNC" (default SYNC, quando non si specifica nella
+    richiesta) e il "ResponseTypeSYNC|ResponseTypeASYNC=XHTML|JSON|XML|CSV|RSS|..."
+    (default "XHTML" per richiese "SYNC" e default "JSON" per richieste "ASYNC",
+    quando non si specifica niente nella richiesta al server);
+    Nel config.ini, possiamo specificare a livello globale entrambi i valori di
+    default per codesti parametri. Nelle sezioni del config.ini inerenti le varie
+    entità che una applicazione può presentare (ad esempio : Ditta, Articolo
+    Documento, oppure pag1, pag2, pagn, ecc...), possiamo ri-specificare gli
+    stessi parametri, i quali, avranno la precedenza su quelli globali.
+    Se poi passiamo gli stessi parametri come richiesta allo script .php
+    (per via GET|POST), questi ultimi, avranno la precedenza sia su quelli globali,
+    che di entità. Tutto cio serve per gestire richieste AJAX o da dispositivo
+    particolare (che non gestisce bene XHTML) e controllare la risposta, in modo
+    tale, da fornire quello che effettivaente serve, ovvero : XHTML, stringa
+    XML, stringa JSON, stringa RSS, ecc... ;
+
+[ ] Nelle richieste, il "Dispatcher" sanitizza solo i parametri inerenti la "page",
+    "RequestType", "ResponseType"; mentre i diversi "Controller", sanitizzeranno
+    i parametri : "action", "param1", "param2", "paramn". E' vero che la corret-
+    tezza di forma può essere controllata nel "Dispatcher", ma quanti e quali
+    tipi di parametri possono essere controllati solo nei rispettivi "Controllers".
+    Quindi, a questo punto, facciamo tutto nei rispettivi "Controllers";
+
+[ ] Anatomia richiesta :
+    entity=<nome entità>
+    action=<nome azione>&param1..n=<lista parametri>
+
+    entity=<nome entità>
+    action=func_call&func_name=<nome func>&param1..n=<lista parametri>&func_result=true|fase
+
+    ...<path>.../page=<nome pagina>
+    param1..n=<lista parametri>
+
+    La richiesta viene mappata al rispettivo controller tramite le tabelle nel
+    file config.ini. Quando si effettuano richieste per "entity", la pagina deve
+    comunque essere sempre ricavata, in base alla "action", nella init dello
+    specifico controller. Ogni "action" rappresenta una pagina
+
+[ ] Nelle richieste, tramite la "action" possiamo dire che vogliamo chiamare
+    una determinata funzione di un file .php o di una classe.
+    Ad esempio : "action=func_call&func_name=nomeFunc&<...eventuali parametri...>";
+    Con la "action" possiamo indicare anche le operazioni da fare in una deteminata
+    pagina, come inserire record, modifiche, cancellazioni, elenco, ecc... ;
+
+[ ] All'interno di ogni funzione "dispalyView...()" controllare il "ResponseType",
+    "action" e altri parametri, per intraprendere l'azione opportuna;
+
+[ ] Nella richiesta mettere un parametro : 
+    "resource=<NomeEntità>&action=view|func_call&<...parametri...>";
+
+[ ] Per ogni "ResponseType" se si vuole rispondere con i file fisici, creare
+    i file per i diversi "ResponseType" aggiungendo "_<ResponseType>";
+
+[ ] Per ogni "ResponseType" se si risponde creando il tutto in memoria, controllare,
+    appunto, il "ResponseType" in ogni funzione di dislay dalla memoria, per
+    generare l'output opportuno;
+
+[ ] Il "ResponeFileTypeOrigin" di tipo "Template" e "Php" possono generare
+    qualinque tipo di "ResponseType", mentre il tpo "Html" può generare solo
+    "ResponseType" di tipo : html, xhtml, html5;
+
+[ ] Implementare la gestione eccezioni, con eccezioni personalizzate, gestione
+    errori, e fare in modo che ogni funzione restituisca o il valore opportuno
+    (Se tutto va bene), o false o lanci una eccezione, a seconda della configuazione
+    , da mettere, sulla seazione generale del fle di config;
