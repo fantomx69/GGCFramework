@@ -1,0 +1,3 @@
+Inserire un file per ogni entità, contenente semplici funzioni o una classe
+(magari con metodi statici) che risponda all richieste REST e che utilizzi, in
+caso, l'entità inerente e/o il model, e/o ecc... .

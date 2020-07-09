@@ -1,0 +1,85 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+        function dammiDataOra() {
+            $("#output").html('');
+            $.ajax({
+            type: "GET",
+            url: "index.php?GGC_RequestType=async&GGC_Entity=index&GGC_Action=data_ora",
+            data: "id=1",
+            success: function(response){
+            $("#output").html(response);
+            }
+            });
+        }
+        
+        function dammiNomeServer() {
+            $("#output").html('');        
+            $.ajax({
+            type: "GET",
+            url: "index.php?GGC_RequestType=async&GGC_Entity=index&GGC_Action=svr_name",
+            data: "id=1",
+            success: function(response){
+            $("#output").html(response);
+            }
+            });
+        }
+        
+        function dammiSaluto() {
+            $("#output").html('');        
+            $.ajax({
+            type: "GET",
+            url: "index.php?GGC_RequestType=async&GGC_Entity=index&GGC_Action=saluto",
+            data: "id=1",
+            success: function(response){
+            $("#output").html(response);
+            }
+            });
+        }
+        </script>
+    </head>
+    <body>
+        <div>
+            Benvenuto!
+            <br/>
+
+            <h3><a href="index.php?GGC_Entity=logout">Logout!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_ResponseDataType=html5&GGC_Entity=logout">HTML5 Logout!!!</a></h3>
+            <br/>
+            <h3><a href="javascript:dammiDataOra();">Chiamata AJAX - Data e Ora!!!</a></h3>
+            <br/>
+            <h3><a href="javascript:dammiNomeServer();">Chiamata AJAX - Nome Server!!!</a></h3>
+            <br/>
+            <h3><a href="javascript:dammiSaluto();">Chiamata AJAX - Saluto!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_Entity=index&GGC_Action=DataOra">Chiamata Normale/Sincrona - Data e Ora tramite funzione!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_Entity=index&GGC_Action=data_ora">Chiamata Normale/Sincrona - Data e Ora tramite memory view!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_Entity=prova_forward">Prova forward!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_Entity=prova_get">Prova Get/Inclusione/Fragment Caching!!!</a></h3>
+            <br/>
+            <h3><a href="index.php?GGC_Entity=ditta">Ditta</a></h3>
+            <br/>
+            <h3><a href="public/download/mod.F.pdf">Bando ata</a></h3>
+            <br/>
+            <h3><a href="public/download/spybotsd-2.0.9-rc1.exe">Anti malware</a></h3>
+            <br/>
+            
+            <div id="output"></div>
+        
+        </div>
+    </body>
+</html>
